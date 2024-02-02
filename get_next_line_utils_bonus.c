@@ -1,0 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bhennequ <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/20 14:50:59 by bhennequ          #+#    #+#             */
+/*   Updated: 2023/02/20 14:53:19 by bhennequ         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line_bonus.h"
+
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strchr(char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	if (c == '\0')
+		return ((char *)&s[ft_strlen(s)]);
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
+	}
+	return (0);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*p;
+
+	p = (unsigned char *)s;
+	while (n)
+	{
+		*p = '\0';
+		p++;
+		--n;
+	}
+}
+
+void	*ft_calloc(size_t nelem, size_t size)
+{
+	void	*tab;
+	size_t	x;
+
+	x = nelem * size;
+	if (nelem == 0 || size == 0)
+		return ((void *)malloc(0));
+	if (x / nelem != size)
+		return (NULL);
+	tab = (void *)malloc(x);
+	if (!tab)
+		return (NULL);
+	ft_bzero(tab, x);
+	return (tab);
+}
+
+char	*ft_strjoin(char *str, char *buff)
+{
+	char	*tab;
+	size_t	i;
+	size_t	j;
+
+	tab = ft_calloc((ft_strlen(str) + ft_strlen(buff) + 1), sizeof(char));
+	if (!tab)
+		return (NULL);
+	i = -1;
+	j = 0;
+	if (str)
+		while (str[++i])
+			tab[i] = str[i];
+	while (buff[j])
+		tab[i++] = buff[j++];
+	free(str);
+	return (tab);
+}
